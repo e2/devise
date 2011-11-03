@@ -1,9 +1,14 @@
 begin
   require "omniauth/core"
 rescue LoadError => e
-  warn "Could not load 'omniauth/core'. Please ensure you have the oa-core gem installed and listed in your Gemfile."
-  raise
+  begin
+    require "omniauth"
+  rescue LoadError => e
+    warn "Could not load 'omniauth/core or omniauth'. Please ensure you have the oa-core or omniauth gem installed and listed in your Gemfile."
+    raise
+  end
 end
+
 
 unless OmniAuth.config.respond_to? :test_mode
   raise "You are using an old OmniAuth version, please ensure you have 0.2.0.beta version or later installed."
